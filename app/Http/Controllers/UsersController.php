@@ -37,7 +37,8 @@ class UsersController extends Controller
      */
     public function getUsersForDataTable(Request $request)
     {
-        $users = $this->user->all();
+        $query = $this->user->orderBy($request->column, $request->order);
+        $users = $query->paginate($request->per_page);
 
         return UsersResource::collection($users);
     }
